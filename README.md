@@ -84,14 +84,67 @@ Post Published Successfully
 
 ## ▶️ Usage
 
-### 1️⃣ Run the script
+### 🔧 Prerequisites
+- Python 3.10 or higher
+- Android Emulator or Physical Android Device
+- ADB configured and device connected (`adb devices`)
+- User already logged in on target social media apps (LinkedIn, X)
+- Google Gemini API key
 
+---
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/your-username/droidrun-social-poster.git
+cd droidrun-social-poster
+```
+
+---
+
+### 2️⃣ Create and activate a virtual environment (recommended)
+```bash
+python -m venv venv
+```
+
+**Windows**
+```bash
+venv\Scripts\activate
+```
+
+**Linux / macOS**
+```bash
+source venv/bin/activate
+```
+
+---
+
+### 3️⃣ Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 4️⃣ Set up environment variables
+
+Create a `.env` file in the project root directory and add:
+
+```env
+GOOGLE_API_KEY=your_gemini_api_key_here
+```
+
+> ⚠️ This API key is required for Google Gemini reasoning via LlamaIndex.
+
+---
+
+### 5️⃣ Run the automation script
 ```bash
 python post_automation.py
 ```
 
-### 2️⃣ Provide inputs
+---
 
+### 6️⃣ Provide input via terminal
 ```text
 Enter post text:
 > Launching our new product today!
@@ -103,9 +156,12 @@ Select platforms (comma separated):
 > linkedin,x
 ```
 
-### 3️⃣ Automation begins
+The script will automatically open each selected app on the Android device and publish the post using UI automation.
 
-The system automatically publishes the post on the selected platforms using Android UI automation.
+---
+
+> ⚠️ Note: This project assumes the user is already authenticated on the selected social media platforms.
+
 
 ---
 
@@ -154,4 +210,5 @@ This project demonstrates how **device-level automation** can solve real-world p
 
 
 ## 👤 Author
+
 Developed by **CodeStrom** during a hackathon.
