@@ -3,22 +3,46 @@ from droidrun import AdbTools, DroidAgent, DroidrunConfig
 from llama_index.llms.google_genai import GoogleGenAI
 from dotenv import load_dotenv
 import os
-from google import genai
 
 load_dotenv()
 
 def get_user_input():
     print("\n=== Social Media Auto Poster ===\n")
 
-    caption = input("Enter post text:\n> ").strip()
-    hashtags = input("\nEnter hashtags:\n> ").strip()
-    platforms = input(
-        "\nAllowed Platform are: Linkedin, X\nSelect platforms (comma separated):\n> "
-    ).strip()
+    while True:
+        caption = input("Enter post text:\n> ").strip()
+        if caption:
+            break
+        print("❌ You didn't give anything to post. Please enter valid text to post.\n")
 
-    platform_list = [p.strip().lower() for p in platforms.split(",")]
+    hashtags = input("\nEnter hashtags (optional):\n> ").strip()
+
+    supported_platforms = {"linkedin", "x"}
+
+    while True:
+        platforms = input(
+            "\nAllowed platforms: LinkedIn, X\nSelect platforms (comma separated):\n> "
+        ).strip()
+
+        platform_list = [p.strip().lower() for p in platforms.split(",") if p.strip()]
+
+        if not platform_list:
+            print("❌ Please select at least one platform.\n")
+            continue
+
+        invalid = [p for p in platform_list if p not in supported_platforms]
+
+        if invalid:
+            print(
+                f"❌ Unsupported platform(s): {', '.join(invalid)}\n"
+                "For now, we only support cross-posting on LinkedIn and X.\n"
+            )
+            continue
+
+        break
 
     return caption, hashtags, platform_list
+
 
 
 async def post_to_platform(platform, post_text):
